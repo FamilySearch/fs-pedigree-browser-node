@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var FamilySearch = require('fs-js-lite');
 
 var app = express();
 
@@ -19,9 +20,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next){
+  req.domain = req.protocol + '://' + req.hostname;
+  req.fs = new FamilySearch({
+    environment: 'integration',
+    appKey: 'a02j000000KTRjpAAH',
+    redirectUri: req.domain + '/oauth-redirect'
+  });
+});
 
 // routes
 app.use('/', require('./routes/index'));
+app.use('/signin', require('./routes/signin'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
