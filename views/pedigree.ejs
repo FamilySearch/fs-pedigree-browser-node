@@ -1,7 +1,24 @@
 <%- include('partials/header') %>
-
 <div class="container">
   <h1>Pedigree</h1>
+  
+  <div class="row ancestor-row">
+    <div class="col-sm-3 ancestor-col"><%- include('partials/person', {person: ancestry['4'] }) %></div>
+    <div class="col-sm-3 ancestor-col"><%- include('partials/person', {person: ancestry['5'] }) %></div>
+    <div class="col-sm-3 ancestor-col"><%- include('partials/person', {person: ancestry['6'] }) %></div>
+    <div class="col-sm-3 ancestor-col"><%- include('partials/person', {person: ancestry['7'] }) %></div>
+  </div>
+  
+  <div class="row ancestor-row">
+    <div class="col-sm-6 ancestor-col"><%- include('partials/person', {person: ancestry['2'] }) %></div>
+    <div class="col-sm-6 ancestor-col"><%- include('partials/person', {person: ancestry['3'] }) %></div>
+  </div>
+  
+  <div class="row ancestor-row">
+    <div class="col-sm-12 ancestor-col"><%- include('partials/person', {person: ancestry['1'] }) %></div>
+  </div>
+  
+  <pre><%- JSON.stringify(ancestry, null, 2) %></pre>
 </div>
   
 <%- include('partials/footer') %>

@@ -23,3 +23,39 @@ nav a:hover {
   max-width: 1024px;
   margin: auto;
 }
+
+/* pedigree */
+
+.ancestor-row .ancestor-col {
+  text-align: center;
+}
+
+.person {
+  height: 200px;
+  width: 150px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  margin: 2em auto;
+  padding: .5em;
+}
+
+.person.missing {
+  background-color: #f0f0f0;
+}
+
+.portrait {
+  width: 75px;
+  height: 75px;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  background-color: #e0e0e0;
+  margin: 1em auto;
+}
+
+.missing .portrait {
+  visibility: hidden;
+}
+
+.person-name {
+  font-size: large;
+}

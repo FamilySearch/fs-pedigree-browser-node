@@ -1,0 +1,14 @@
+<%
+  var missing = false;
+  if(typeof person === 'undefined'){
+    person = {
+      display: {}
+    };
+    missing = true;
+  }
+%>
+<div class="person <%= missing ? 'missing' : '' %>">
+  <div class="portrait"></div>
+  <div class="person-name"><%= person.display.name %></div>
+  <div class="person-lifespan"><%= person.display.lifespan %></div>
+</div>
