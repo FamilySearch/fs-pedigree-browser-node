@@ -19,8 +19,8 @@
   
   <h3>Children</h3>
   <div class="children">
-    <% for(var i = 0; i < descendancy.children.length; i++) { %>
-      <%- include('partials/person', {person: descendancy.children[i] }) %>
+    <% for(var i = 0; i < children.length; i++) { %>
+      <%- include('partials/person', {person: children[i] }) %>
     <% } %>
   </div>
   

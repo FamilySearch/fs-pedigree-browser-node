@@ -28,28 +28,16 @@ router.get('/:personId', fsSession, function(req, res, next) {
       });
     },
     
-    descendancy: function(callback){
-      fs.get('/platform/tree/descendancy?person=' + personId, function(error, response){
-        if(error || response.statusCode !== 200){
+    children: function(callback){
+      fs.get(`/platform/tree/persons/${personId}/children`, function(error, response){
+        if(error || response.statusCode >= 400){
           return callback(error || restError(response));
         }
-        var descendancy = {
-          children: []
-        };
-        response.data.persons.forEach(function(person){
-          var number = person.display.descendancyNumber;
-          if(number === '1-S'){
-            descendancy.spouse = person;
-          }
-          else if(/1\.\d+/.test(number)){
-            descendancy.children.push(person);
-          }
-        });
-        callback(null, descendancy);
+        callback(null, response.data ? response.data.persons : []);
       });
     },
     
-    portraits: function(ancestry, descendancy, autoCallback){
+    portraits: function(ancestry, children, autoCallback){
       var q = async.queue(function(person, queueCallback){
         fs.get('/platform/tree/persons/' + person.id + '/portrait', function(error, response){
           // don't handle errors here because missing the portrait is not fatal
@@ -65,10 +53,7 @@ router.get('/:personId', fsSession, function(req, res, next) {
       for(var a in ancestry){
         q.push(ancestry[a]);
       }
-      q.push(descendancy.children);
-      if(descendancy.spouse){
-        q.push(descendancy.spouse);
-      }
+      q.push(children);
     }
     
   }, function(error, results){
