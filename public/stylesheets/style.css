@@ -26,10 +26,6 @@ nav a:hover {
 
 /* pedigree */
 
-.ancestor-row .ancestor-col {
-  text-align: center;
-}
-
 .person {
   height: 200px;
   width: 150px;
@@ -39,6 +35,7 @@ nav a:hover {
   padding: .5em;
   position: relative;
   background-color: #fff;
+  text-align: center;
 }
 
 .person:not(.missing){
@@ -72,7 +69,8 @@ nav a:hover {
 
 /* draw pedigree lines */
 
-.person:after {
+.father .person:after,
+.mother .person:after {
   content: '';
   height: 120px;
   display: block;
@@ -101,4 +99,11 @@ nav a:hover {
 
 .parents .person:after {
   width: 200%;
+}
+
+/* children */
+
+.children {
+  display: flex;
+  justify-content: center;
 }

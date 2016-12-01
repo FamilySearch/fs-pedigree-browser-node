@@ -13,10 +13,3 @@
   <div class="person-lifespan"><%= person.display.lifespan %></div>
   <div class="person-id"><%= person.id %></div>
 </div>
-<script>
-  Array.from(document.querySelectorAll('.person:not(.missing)')).forEach(function($person){
-    $person.addEventListener('click', function(){
-      window.location.href = '/pedigree/' + $person.dataset.pid;
-    });
-  });
-</script>

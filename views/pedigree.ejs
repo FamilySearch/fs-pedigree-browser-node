@@ -17,6 +17,21 @@
     <div class="col-sm-12 ancestor-col"><%- include('partials/person', {person: ancestry['1'] }) %></div>
   </div>
   
+  <h3>Children</h3>
+  <div class="children">
+    <% for(var i = 0; i < descendancy.children.length; i++) { %>
+      <%- include('partials/person', {person: descendancy.children[i] }) %>
+    <% } %>
+  </div>
+  
 </div>
+
+<script>
+  Array.from(document.querySelectorAll('.person:not(.missing)')).forEach(function($person){
+    $person.addEventListener('click', function(){
+      window.location.href = '/pedigree/' + $person.dataset.pid;
+    });
+  });
+</script>
   
 <%- include('partials/footer') %>
