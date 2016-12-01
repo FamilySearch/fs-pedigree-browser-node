@@ -11,6 +11,14 @@ nav {
   color: white;
 }
 
+nav a,
+nav a:visited {
+  color: #fff;
+}
+nav a:hover {
+  color: #000;
+}
+
 .container {
   max-width: 1024px;
   margin: auto;
