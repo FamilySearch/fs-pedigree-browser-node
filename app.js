@@ -53,6 +53,7 @@ app.use(function(req, res, next){
 // routes
 app.use('/', require('./routes/index'));
 app.use('/signin', require('./routes/signin'));
+app.use('/signout', require('./routes/signout'));
 app.use('/oauth-redirect', require('./routes/oauth-redirect'));
 app.use('/pedigree', require('./routes/pedigree'));
 
