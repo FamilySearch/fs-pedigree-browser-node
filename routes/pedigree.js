@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var fsSession = require('../middleware/fsSession');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', fsSession, function(req, res, next) {
   res.render('pedigree');
 });
 

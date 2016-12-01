@@ -29,6 +29,8 @@ app.use(session({
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// setup the fs sdk and session based template data
 app.use(function(req, res, next){
   req.domain = req.protocol + '://' + req.hostname;
   req.fs = new FamilySearch({
@@ -36,6 +38,15 @@ app.use(function(req, res, next){
     appKey: 'a02j000000KTRjpAAH',
     redirectUri: req.domain + '/oauth-redirect'
   });
+  
+  // defaulting to an empty object allows us to do if(session.data) checks
+  // in templates without having to first check if session is defined
+  res.locals.session = req.session || {};
+  
+  // load the token if it's saved in the session
+  if(req.session.fs_token){
+    req.fs.setAccessToken(req.session.fs_token);
+  }
   next();
 });
 
