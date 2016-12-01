@@ -29,8 +29,6 @@ function pedigreeHandler(req, res, next) {
           // don't handle errors here because missing the portrait is not fatal
           if(response && response.headers.location){
             person.display.portrait = response.headers.location;
-          } else {
-            console.log(error || response);
           }
           queueCallback();
         });
