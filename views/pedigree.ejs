@@ -1,6 +1,5 @@
 <%- include('partials/header') %>
 <div class="container">
-  <h1>Pedigree</h1>
   
   <div class="row ancestor-row grandparents">
     <div class="col-sm-3 ancestor-col father"><%- include('partials/person', {person: ancestry['4'] }) %></div>
@@ -18,7 +17,6 @@
     <div class="col-sm-12 ancestor-col"><%- include('partials/person', {person: ancestry['1'] }) %></div>
   </div>
   
-  <pre><%- JSON.stringify(ancestry, null, 2) %></pre>
 </div>
   
 <%- include('partials/footer') %>

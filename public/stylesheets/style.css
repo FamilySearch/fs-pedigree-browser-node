@@ -41,6 +41,10 @@ nav a:hover {
   background-color: #fff;
 }
 
+.person:not(.missing){
+  cursor: pointer;
+}
+
 .person.missing {
   background-color: #f0f0f0;
 }

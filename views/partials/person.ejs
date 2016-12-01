@@ -7,9 +7,16 @@
     missing = true;
   }
 %>
-<div class="person <%= missing ? 'missing' : '' %>">
+<div class="person <%= missing ? 'missing' : '' %>" data-pid="<%= person.id %>">
   <img class="portrait" <%- person.display.portrait ? `src="${person.display.portrait}"` : '' %>></img>
   <div class="person-name"><%= person.display.name %></div>
   <div class="person-lifespan"><%= person.display.lifespan %></div>
   <div class="person-id"><%= person.id %></div>
 </div>
+<script>
+  Array.from(document.querySelectorAll('.person:not(.missing)')).forEach(function($person){
+    $person.addEventListener('click', function(){
+      window.location.href = '/pedigree/' + $person.dataset.pid;
+    });
+  });
+</script>
