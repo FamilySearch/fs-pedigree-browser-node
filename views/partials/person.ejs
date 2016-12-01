@@ -8,7 +8,8 @@
   }
 %>
 <div class="person <%= missing ? 'missing' : '' %>">
-  <div class="portrait"></div>
+  <img class="portrait" <%- person.display.portrait ? `src="${person.display.portrait}"` : '' %>></img>
   <div class="person-name"><%= person.display.name %></div>
   <div class="person-lifespan"><%= person.display.lifespan %></div>
+  <div class="person-id"><%= person.id %></div>
 </div>
