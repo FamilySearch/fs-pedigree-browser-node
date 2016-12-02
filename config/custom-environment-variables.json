@@ -1,0 +1,6 @@
+{
+  "FS": {
+    "environment": "FS_ENVIRONMENT",
+    "appKey": "FS_APP_KEY"
+  }
+}

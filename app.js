@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var session = require('express-session');
 var FamilySearch = require('fs-js-lite');
+var config = require('config');
 
 var app = express();
 
@@ -34,8 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
   req.domain = req.protocol + '://' + req.hostname;
   req.fs = new FamilySearch({
-    environment: 'integration',
-    appKey: 'a02j000000KTRjpAAH',
+    environment: config.get('FS.environment'),
+    appKey: config.get('FS.appKey'),
     redirectUri: req.domain + '/oauth-redirect'
   });
   
