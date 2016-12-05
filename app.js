@@ -33,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup the fs sdk and session based template data
 app.use(function(req, res, next){
-  var error;
   try {
     var domain = req.protocol + '://' + req.hostname;
     req.fs = new FamilySearch({
@@ -51,9 +50,9 @@ app.use(function(req, res, next){
       req.fs.setAccessToken(req.session.fs_token);
     }
   } catch(e){ 
-    error = e;
+    return next(e);
   }
-  next(error);
+  next();
 });
 
 // routes
