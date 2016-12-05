@@ -42,7 +42,7 @@ app.use(function(req, res, next){
   
   // defaulting to an empty object allows us to do if(session.data) checks
   // in templates without having to first check if session is defined
-  res.locals.session = req.session ? res.session : {};
+  res.locals.session = req.session ? req.session : {};
   console.log(res.locals.session);
   
   // load the token if it's saved in the session
