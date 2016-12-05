@@ -27,6 +27,10 @@
 </div>
 
 <script>
+  // Instead of making the person squares clickable by wrapping them in <a> tags
+  // and committing a great sin of rendering block content in an inline element,
+  // we just listen for the click event on them and manually perform the
+  // navigation.
   Array.from(document.querySelectorAll('.person:not(.missing)')).forEach(function($person){
     $person.addEventListener('click', function(){
       window.location.href = '/pedigree/' + $person.dataset.pid;
