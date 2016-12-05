@@ -54,6 +54,7 @@ app.use(function(req, res, next){
     }
   } catch(e){ 
     console.error('error caught in middleware');
+    console.error(e.stack);
   }
   next();
 });
