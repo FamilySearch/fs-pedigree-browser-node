@@ -33,11 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup the fs sdk and session based template data
 app.use(function(req, res, next){
-  req.mountDomain = req.protocol + '://' + req.hostname;
+  var domain = req.protocol + '://' + req.hostname;
   req.fs = new FamilySearch({
     environment: config.get('FS.environment'),
     appKey: config.get('FS.appKey'),
-    redirectUri: req.mountDomain + '/oauth-redirect'
+    redirectUri: domain + '/oauth-redirect'
   });
   
   // defaulting to an empty object allows us to do if(session.data) checks
