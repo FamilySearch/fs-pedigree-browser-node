@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var restError = require('../lib/rest-error');
 
 // Setup the FS sdk client before handling any requests on this router.
 router.use(require('../middleware/fs-client'));
@@ -11,6 +12,7 @@ router.use(require('../middleware/fs-client'));
 router.get('/', function(req, res, next) {
   
   // Exchange the code for an access token and handle the response.
+  // https://familysearch.org/developers/docs/api/authentication/Authorization_resource
   req.fs.oauthToken(req.query.code, function(error, tokenResponse){
     
     // error will be set when there was a networking error (i.e. the request
@@ -18,7 +20,7 @@ router.get('/', function(req, res, next) {
     // API). If we did get a response then we still check the status code 
     // to make sure the user successfully signed in.
     if(error || tokenResponse.statusCode >= 400){
-      return next(error || tokenResponse.data);
+      return next(error || restError(tokenResponse));
     }
     
     // At this point we've verified that the user successfully sign in so we
