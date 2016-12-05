@@ -40,11 +40,12 @@ app.use(function(req, res, next){
     appKey: config.get('FS.appKey'),
     redirectUri: domain + '/oauth-redirect'
   });
-  
+  console.log('after client');
   // defaulting to an empty object allows us to do if(session.data) checks
   // in templates without having to first check if session is defined
   res.locals.session = req.session ? req.session : {};
-  console.log('session', res.locals.session);
+  console.log('session');
+  console.log(res.locals.session);
   
   // load the token if it's saved in the session
   if(req.session.fs_token){
