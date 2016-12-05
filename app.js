@@ -31,7 +31,14 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// setup the fs sdk and session based template data
+// defaulting to an empty object allows us to do if(session.data) checks
+// in templates without having to first check if session is defined
+app.use(function(req, res, next){
+  res.locals.session = req.session || {};
+  next();
+});
+
+// setup the fs sdk
 app.use(function(req, res, next){
   try {
     var domain = req.protocol + '://' + req.hostname;
@@ -41,12 +48,8 @@ app.use(function(req, res, next){
       redirectUri: domain + '/oauth-redirect'
     });
     
-    // defaulting to an empty object allows us to do if(session.data) checks
-    // in templates without having to first check if session is defined
-    res.locals.session = req.session || {};
-    
     // load the token if it's saved in the session
-    if(req.session.fs_token){
+    if(req.session && req.session.fs_token){
       req.fs.setAccessToken(req.session.fs_token);
     }
   } catch(e){ 
