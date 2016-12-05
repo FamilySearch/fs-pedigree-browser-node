@@ -1,5 +1,6 @@
 {
   "FS": {
-    "environment": "integration"
+    "environment": "integration",
+    "appKey": "a02j000000KTRjpAAH"
   }
 }
