@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup the fs sdk and session based template data
 app.use(function(req, res, next){
+  console.log('FS setup middleware');
   var domain = req.protocol + '://' + req.hostname;
   req.fs = new FamilySearch({
     environment: config.get('FS.environment'),
@@ -43,7 +44,7 @@ app.use(function(req, res, next){
   // defaulting to an empty object allows us to do if(session.data) checks
   // in templates without having to first check if session is defined
   res.locals.session = req.session ? req.session : {};
-  console.log(res.locals.session);
+  console.log('session', res.locals.session);
   
   // load the token if it's saved in the session
   if(req.session.fs_token){
