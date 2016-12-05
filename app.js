@@ -3,22 +3,26 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var session = require('express-session');
-var FamilySearch = require('fs-js-lite');
-var config = require('config');
 
 var app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.locals.title = 'Pedigree Browser';
 
-// allow the app to be run behind proxies such as nginx or in heroku
+// Allow the app to be run behind proxies. The app will detect when it's behind
+// a proxy and properly configure https and other settings based on the user's
+// connection to the proxy instead of the proxies connection to server.
+// https://expressjs.com/en/guide/behind-proxies.html
 app.set('trust proxy', true);
 
-// enable session storage. this defaults to using an in-memory store which is
-// only designed for development environments. it will leak memory. use a
-// different storage adapter in production such as redis.
+// Enable session storage. This defaults to using an in-memory store which is
+// only designed for development environments. It will leak memory. Use a
+// different storage adapter in production, such as redis.
+// https://www.npmjs.com/package/express-session
+//
+// We use the session to store the FS access token and the current user data.
 app.use(session({
   secret: 'pedigree browser session secret',
   resave: false,
@@ -26,59 +30,44 @@ app.use(session({
   cookie: { secure: true }
 }));
 
-// uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Use morgan to log all incoming requests. Defaults to Apache style logs.
 app.use(logger('dev'));
+
+// Configure serving of static assets.
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// defaulting to an empty object allows us to do if(session.data) checks
-// in templates without having to first check if session is defined
+// Make the session available in templates and default to an empty object. If we
+// don't default to an empty object then we would have to check for its 
+// existence before accessing data in templates.
 app.use(function(req, res, next){
   res.locals.session = req.session || {};
   next();
 });
 
-// setup the fs sdk
-app.use(function(req, res, next){
-  try {
-    var domain = req.protocol + '://' + req.hostname;
-    req.fs = new FamilySearch({
-      environment: config.get('FS.environment'),
-      appKey: config.get('FS.appKey'),
-      redirectUri: domain + '/oauth-redirect'
-    });
-    
-    // load the token if it's saved in the session
-    if(req.session && req.session.fs_token){
-      req.fs.setAccessToken(req.session.fs_token);
-    }
-  } catch(e){ 
-    return next(e);
-  }
-  next();
-});
-
-// routes
+// Attach routes
 app.use('/', require('./routes/index'));
 app.use('/signin', require('./routes/signin'));
 app.use('/signout', require('./routes/signout'));
 app.use('/oauth-redirect', require('./routes/oauth-redirect'));
 app.use('/pedigree', require('./routes/pedigree'));
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  
+  // Set locals (template variables)
+  // Only provide the error details in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Render the error page
   res.status(err.status || 500);
   res.render('error');
 });

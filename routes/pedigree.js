@@ -1,15 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var fsSession = require('../middleware/fs-session');
 var restError = require('../lib/rest-error');
 var async = require('async');
 
+// Setup the FS sdk client before handling any requests on this router.
+router.use(require('../middleware/fs-client'));
 
-router.get('/', fsSession, function(req, res){
+// Make sure the user is signed in before handling any requests on this router.
+router.use(require('../middleware/fs-session'));
+
+router.get('/', function(req, res){
   res.redirect('/pedigree/' + req.session.user.personId);
 });
 
-router.get('/:personId', fsSession, function(req, res, next) {
+router.get('/:personId', function(req, res, next) {
   var fs = req.fs,
       personId = req.params.personId || req.session.user.personId;
   
