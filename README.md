@@ -32,7 +32,7 @@ issues that didn't fit anywhere in the source code.
     npm install
     ```
     
-2. Register you app in the [FamilySearch Developer's center](https://grms.force.com/Developer/FSDev_CommunitiesCustomLogin?startURL=%2FFSDev_MyDevHomePage).
+2. Register your app in the [FamilySearch Developer's center](https://grms.force.com/Developer/FSDev_CommunitiesCustomLogin?startURL=%2FFSDev_MyDevHomePage).
 3. Update the value of `appKey` in `config/default.json` with the key assigned
 to the app you just registered in the developer's center.
 4. Run the app.
