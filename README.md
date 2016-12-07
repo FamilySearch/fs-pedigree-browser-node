@@ -20,7 +20,7 @@ The solutions shown by this sample app are not intented to be canonical. There
 is almost always more than one way to address a problem.
 
 The source code if heavily documented. Please read it. This README only addresses
-issues that didn't fit anyqhere in the source code.
+issues that didn't fit anywhere in the source code.
 
 ## Running Locally
 
@@ -82,8 +82,16 @@ username or choose to not display the username in the header.
 
 ## Configuration via Environment Variables
 
-TODO
+The app uses [node-config](https://github.com/lorenwest/node-config) to enable
+easy configuration in different environments. Typically you want your development
+environments to use the integration FamilySearch system while your production
+instance uses the production FamilySearch system. You might even have a staging
+environment that uses the beta FamilySearch system.
 
-## Error handling
+node-config loads JSON configuration files from the `config` directory and
+merges them with overrides occuring in [specific order](https://github.com/lorenwest/node-config/wiki/Configuration-Files).
+The default file sets the app key and chooses the integration reference. In
+staging we use the beta reference and in production we use the production reference.
 
-TODO
+You can add other configuration options for you app such as different database
+credentials for your deployments.
