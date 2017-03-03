@@ -1,5 +1,10 @@
 {
   "FS": {
     "environment": "production"
+  },
+  "session": {
+    "cookie": {
+      "secure": true
+    }
   }
 }

@@ -3,6 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var session = require('express-session');
+var config = require('config');
 
 var app = express();
 
@@ -27,7 +28,7 @@ app.use(session({
   secret: 'pedigree browser session secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
+  cookie: { secure: config.get('session.cookie.secure') }
 }));
 
 // Use morgan to log all incoming requests. Defaults to Apache style logs.
