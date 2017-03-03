@@ -98,7 +98,7 @@ router.get('/:personId', function(req, res, next) {
     // them available to this task.
     portraits: function(ancestry, children, autoCallback){
       
-      // The portrais must be fetched one at a time so we use a queue.
+      // The portraits must be fetched one at a time so we use a queue.
       // http://caolan.github.io/async/docs.html#queue
       var q = async.queue(function(person, queueCallback){
         
